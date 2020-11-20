@@ -45,6 +45,8 @@ const crypto = require('crypto')
         records.push(attrs);
 
         await this.writeAll(records);
+
+        return attrs
       
     }
 
