@@ -1,7 +1,7 @@
 const fs = require('fs');
 const crypto = require('crypto')
 
-//importaamos librea util para poder convertir funciones que usan callbacks en promesas
+//importamos libreriaa util para poder convertir funciones que usan callbacks en promesas
 const util = require('util');
 //convertimos la funcion scrypt [usada para guardar salt+pass hasheado]  en una promesa
 const scrypt = util.promisify(crypto.scrypt)

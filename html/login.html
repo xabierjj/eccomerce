@@ -14,6 +14,8 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
 
+<script src="js/login.js"></script>
+
 <body>
 
     <div class="container">
@@ -28,11 +30,13 @@
                                 <input type="email" name='email' id="email" class="form-control"
                                     placeholder="Correo electrónico" required autofocus>
                                 <label for="email">Email address</label>
+                                <span class="error" id="emailError"></span>
                             </div>
                             <div class="form-label-group">
                                 <input type="password" name='password' id="password" class="form-control"
                                     placeholder="Contraseña" required autofocus>
                                 <label for="password">Contraseña</label>
+                                <span class="error" id="passwordError"></span>
                             </div>
 
 

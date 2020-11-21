@@ -6,6 +6,8 @@ const authRouter = require('./routes/admin/auth');
 
 const cookieSession = require('cookie-session');
 
+
+
 //añade a req la propiedad session , req.session
 
 
@@ -15,6 +17,8 @@ const { json } = require('express');
 
 const app = express();
 
+// hacemos la carpeta public accesible a todo el mundo . Asi se podran acceder a los archivos del cliente css,js,imagenes
+app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieSession({
     keys: ['kjakaslkskldsapkksocn']
