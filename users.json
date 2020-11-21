@@ -88,5 +88,40 @@
     "email": "xab@gmail.com",
     "password": "pass",
     "id": "288b24ec"
+  },
+  {
+    "email": "xa@gmail.com",
+    "password": "aaa",
+    "id": "9beb0a01"
+  },
+  {
+    "email": "bimbo@gmail.com",
+    "password": "bimbo",
+    "id": "1555c901"
+  },
+  {
+    "email": "pana2@pana.com",
+    "password": "45d37a5584ebe4c0044c0f08072b2ccc89bf3729a9f1139090205a4c5afd29bbe52b34c3f0f987f953bd0c19defb176db1d9b525432ce61e65b6e7f73eb9bdde.80eb47877d085755",
+    "id": "d3790bd6"
+  },
+  {
+    "email": "pana3@pana.com",
+    "password": "5ed5a8029ae8d015a2115c943ece8b2512b2033f29fd66f1bafd6527f8bcfe9062dda6bf602662ce6809e204468cf950fc94b85b3129e838e91c3498e8fe0ba6.d5590b1e7e0bca93",
+    "id": "0b66c23f"
+  },
+  {
+    "email": "po@po.com",
+    "password": "c7d2d7d24acff7f11dcd213eecde27abac08849667cbe8c9b9c724721ec1c9c5913025d615a2a874ba4cdef1bc6c8659fe02498424a9b898339360d293ab305d.318276c2ee48721a",
+    "id": "c393e4fd"
+  },
+  {
+    "email": "oro@gmail.com",
+    "password": "7068f3d591969345aa5f1be1edaf99438951cfafc598783c3d012b55b3bdfd9ba0d51a9737435ba8f17c9af7efdd7e8493d4b258ecf77b1016f3ca9d85ef08d5.af3c573f22b96f2e",
+    "id": "954c9c16"
+  },
+  {
+    "email": "padi@pop.com",
+    "password": "fe9bdf5f24345b9f3483066f1c075f6c66947face38081ac5527fe3d0b1bba466fd1f6c7e4f47c17d223af02011380f30cefd7e6cb18a5654785becb07f4e8d1.730f85002a713a74",
+    "id": "ffb64e8a"
   }
 ]
