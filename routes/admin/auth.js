@@ -1,7 +1,7 @@
 
 const express = require('express')
 
-const { check, validationResult } = require('express-validator')
+const {handleErrors} = require('./middlewares')
 
 const usersRepo = require('../../repositories/users')
 const path = require('path');
@@ -29,14 +29,10 @@ router.post('/signup',
     [
         requireEmail,
         requirePassword,
-        requirePaswordConfirmation], async (req, res) => {
+        requirePaswordConfirmation],handleErrors() ,async (req, res) => {
             
             
-            const errors = validationResult(req)
-            if (!errors.isEmpty()){
-                //return res.send(signupTemplate({req,errors}))
-                return res.send(errors)
-            }
+            
 
             console.log(errors)
             const { email, password, passwordConfirmation } = req.body
@@ -64,17 +60,20 @@ router.get('/login', (req, res) => {
 
 })
 
-router.post('/login',[requireEmailExist,requirePaswordLogin], async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()){
-       // return res.send(loginTemplate({req,errors}))
-        return res.send(errors)
+router.post('/login',[requireEmailExist,requirePaswordLogin],handleErrors(), async (req, res) => {
+  
 
-    }
+    const { email } = req.body;
 
-    res.send('Loggeado')
-    req.session.userId = user.id
+    const user = await usersRepo.getOneBy({ email });
 
+    req.session.userId = user.id;
+
+    console.log( req.session.userId)
+    
+    return res.send({error:false});
+   
+  
 })
 
 module.exports = router;

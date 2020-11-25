@@ -29,6 +29,10 @@ $(document).ready(() => {
 
         }
 
+        if (res.error===false) {
+            location.href = '/admin/products'
+        }
+
 
 
     })

@@ -14,7 +14,9 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
 
-<script src="js/product.js"></script>
+<!-- empieza a mirar desde el path del url /admin/products/new -->
+
+<script src="../../js/newProduct.js"></script>
 
 <body>
 
@@ -25,7 +27,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Producto</h5>
 
-                        <form class="productForm" method="POST">
+                        <form class="productForm" method="POST" enctype="multipart/form-data">
                             <div class="form-label-group">
                                 <label for="name">Nombre del producto</label>
                                 <input type="text" name='name' id="name" class="form-control"
@@ -41,7 +43,7 @@
                                 <span class="error" id="precioError"></span>
                             </div>
                             <div class="form-label-group">
-                                <label for="imagen">Precio</label>
+                                <label for="imagen">Imagen</label>
                                 <input type="file" name='imagen' id="imagen" class="form-control"
                                     placeholder="Imagen del producto" required autofocus>
                                 
