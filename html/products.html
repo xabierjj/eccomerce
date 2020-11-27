@@ -20,6 +20,8 @@
 
 <body>
 
+
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -49,6 +51,51 @@
         </div>
 
     </div>
+
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Producto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form class="productForm" method="POST" enctype="multipart/form-data">
+                    <div class="form-label-group">
+                        <label for="name">Nombre del producto</label>
+                        <input type="text" name='name' id="name" class="form-control"
+                            placeholder="Nombre del producto" required autofocus>
+                       
+                        <span class="error" id="nameError"></span>
+                    </div>
+                    <div class="form-label-group">
+                        <label for="precio">Precio</label>
+                        <input type="number" name='precio' id="precio" class="form-control"
+                            placeholder="Precio" required autofocus>
+                        
+                        <span class="error" id="precioError"></span>
+                    </div>
+                    <div class="form-label-group">
+                        <label for="imagen">Imagen</label>
+                        <input type="file" name='imagen' id="imagen" class="form-control"
+                            placeholder="Imagen del producto" >
+                        
+                        <span class="error" id="imagenError"></span>
+                    </div>
+
+
+
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase"  type="submit"
+                        name='submit'>Guardar</button>
+                </form>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+      
 
 </body>
 

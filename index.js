@@ -3,7 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const birds = require('./prueba');
 const authRouter = require('./routes/admin/auth');
-const productsRouter = require('./routes/admin/products')
+const adminProductsRouter = require('./routes/admin/products')
+const productsRouter = require('./routes/products')
 
 //añade a req la propiedad session , req.session
 const cookieSession = require('cookie-session');
@@ -27,6 +28,7 @@ app.use(cookieSession({
     keys: ['kjakaslkskldsapkksocn']
 }))
 app.use(authRouter)
+app.use(adminProductsRouter)
 app.use(productsRouter)
 
 

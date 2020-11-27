@@ -52,6 +52,50 @@ router.get('/admin/products/:id/edit',requireAuth, async  (req, res) => {
     
 })
 
+router.post('/admin/products/:id/delete',requireAuth, async  (req, res) => {
+   
+   
+
+   await productsRepo.delete(req.params.id)
+   
+
+
+     
+     
+     res.send(true)
+     
+ })
+
+
+
+router.post('/admin/products/:id/edit',requireAuth, upload.single('imagen'),[requireName, requirePrice], handleErrors(), async  (req, res) => {
+   
+    const id = req.params.id
+    const changes =req.body
+
+    if (req.file) {
+        const imagen=req.file.buffer.toString('base64')
+        changes.imagen=imagen
+    }
+   
+   
+   
+    try {
+
+        await productsRepo.update(id ,changes)
+        res.send('Updateado')
+
+    } catch (err) {
+        
+        res.send('No existe el producto')
+    }
+
+
+   
+    
+     
+ })
+
 
 router.get('/admin/products/new',requireAuth ,(req, res) => {
     return res.sendFile(path.join(__dirname + '../../../html/product.html'))
