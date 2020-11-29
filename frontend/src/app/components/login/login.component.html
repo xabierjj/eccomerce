@@ -1,0 +1,39 @@
+<div class="container animated fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">LogIn</h5>
+
+                    <form (ngSubmit)="onSubmit(f)" #f='ngForm'  class="logInForm">
+                        <div class="form-label-group">
+                            <label for="email">Email address</label>
+                            <input type="email" name='email' id="email" class="form-control"
+                                placeholder="Correo electrónico"
+                                 [(ngModel)]="user.email" required autofocus>
+                           
+                            <span *ngIf="f.submitted && f.controls['email'].errors" class="text-danger animated fadeIn" >El email no es valido</span>
+                        </div>
+                        <div class="form-label-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" name='password' id="password" class="form-control"
+                                placeholder="Contraseña" [(ngModel)]="user.password" required autofocus>
+                            
+                                <span *ngIf="f.submitted && f.controls['password'].errors" class="text-danger animated fadeIn" >La contraseña no es valida</span>
+
+                        </div>
+
+
+
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+                            name='submit'>LogIn</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
