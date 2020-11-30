@@ -24,7 +24,8 @@ module.exports = {
 
        
       if (!req.session.userId) {
-        
+         
+        console.log('No estas autenticado')
         return res.send({error:true, msg:'No estas autenticado'});
       }
       console.log('authenticated')

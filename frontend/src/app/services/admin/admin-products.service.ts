@@ -18,4 +18,21 @@ export class AdminProductsService {
 
 
   }
+
+   getOneProduct(id) {
+
+    return  this.http.get(`${this.url}/admin/products/${id}`)
+
+  }
+
+  editProduct(product){
+    return  this.http.post(`${this.url}/admin/products/${product.id}/edit`,product)
+  }
+
+  deleteProduct(id) {
+    return  this.http.get(`${this.url}/admin/products/${id}/delete`)
+
+  }
+
+
 }

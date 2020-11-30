@@ -5,7 +5,7 @@
     <div class="card-body">
       <h5 class="card-title">{{product.title}}</h5>
       
-      <p class="card-text"><small class="text-muted">{{product.price}} € </small></p>
+      <p class="card-text"><small class="text-muted">{{product.price | currency:'EUR'}}  </small></p>
 
       <button  type="button" class="btn btn-outline-primary btn-block">Añadir al carrito</button>
 

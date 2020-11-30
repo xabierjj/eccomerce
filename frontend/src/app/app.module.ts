@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http'
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs)
 
 //Servicios
 import { AuthService } from './services/auth.service';
@@ -18,6 +21,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
+import { ProductEditComponent } from './components/admin/product-edit/product-edit.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,8 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
     HomeComponent,
     SignupComponent,
     ProductCardComponent,
-    AdminProductsComponent
+    AdminProductsComponent,
+    ProductEditComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,10 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
     HttpClientModule,
     APP_ROUTING
   ],
-  providers: [AuthService],
+  providers: [AuthService, {
+    provide: LOCALE_ID,
+    useValue: 'es'
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

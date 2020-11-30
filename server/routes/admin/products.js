@@ -18,18 +18,22 @@ const upload = multer({ storage: multer.memoryStorage() })
 router.get('/admin/products', requireAuth,async  (req, res) => {
 
     
+    console.log('aa')
 
+    let products = await productsRepo.getAll()
 
-    return res.sendFile(path.join(__dirname + '../../../html/products.html'))
+  
+
+    res.send(products)
 
 
     
     
 })
 
-router.get('/admin/products/get',requireAuth, async  (req, res) => {
-
-    const product = await productsRepo.getAll()   
+router.get('/admin/products/:id', async  (req, res) => {
+    
+    const product = await productsRepo.getOne(req.params.id)
     res.send(product)
 
     
@@ -52,26 +56,23 @@ router.get('/admin/products/:id/edit',requireAuth, async  (req, res) => {
     
 })
 
-router.post('/admin/products/:id/delete',requireAuth, async  (req, res) => {
+router.get('/admin/products/:id/delete', async  (req, res) => {
    
    
 
    await productsRepo.delete(req.params.id)
    
-
-
-     
-     
-     res.send(true)
+    res.send({msg:'Borrado correctamente'})
      
  })
 
 
 
-router.post('/admin/products/:id/edit',requireAuth, upload.single('imagen'),[requireName, requirePrice], handleErrors(), async  (req, res) => {
+router.post('/admin/products/:id/edit', upload.single('imagen'),[requireName, requirePrice], handleErrors(), async  (req, res) => {
    
     const id = req.params.id
     const changes =req.body
+    console.log(changes,id)
 
     if (req.file) {
         const image=req.file.buffer.toString('base64')
@@ -83,17 +84,16 @@ router.post('/admin/products/:id/edit',requireAuth, upload.single('imagen'),[req
     try {
 
         await productsRepo.update(id ,changes)
-        res.send('Updateado')
+       
+
+        res.send({msg:'Editado correctamente'})
 
     } catch (err) {
         
         res.send('No existe el producto')
     }
 
-
-   
-    
-     
+ 
  })
 
 
