@@ -1,10 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule ,HTTP_INTERCEPTORS} from '@angular/common/http'
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 registerLocaleData(localeEs)
+
+
+//Interceptors
+
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 //Servicios
 import { AuthService } from './services/auth.service';
@@ -44,7 +49,9 @@ import { ProductEditComponent } from './components/admin/product-edit/product-ed
   providers: [AuthService, {
     provide: LOCALE_ID,
     useValue: 'es'
-  }],
+  }, {provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

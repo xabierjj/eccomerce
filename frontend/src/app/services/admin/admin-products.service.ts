@@ -14,7 +14,7 @@ export class AdminProductsService {
    }
   
   getProducts(){
-    return this.http.get(`${this.url}/`)
+    return this.http.get(`${this.url}/admin/products`)
 
 
   }

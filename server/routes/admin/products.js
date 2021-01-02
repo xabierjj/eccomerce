@@ -2,10 +2,14 @@ const express = require('express')
 const path = require('path');
 
 const multer = require('multer');
+const {v4:uuidv4} = require('uuid')
+
 
 const router = express.Router()
 const productsRepo = require('../../repositories/products')
-const {handleErrors,requireAuth} = require('./middlewares')
+const {handleErrors,requireAuth,requireJwtAuth} = require('./middlewares')
+
+const {createProduct,getUsersProducts} = require('../../controllers/products')
 
 const { requireName, requirePrice } = require('./validators');
 const { send } = require('process');
@@ -15,23 +19,9 @@ const products = require('../../repositories/products');
 const upload = multer({ storage: multer.memoryStorage() })
 
 
-router.get('/admin/products', requireAuth,async  (req, res) => {
+router.get('/admin/products', requireJwtAuth,getUsersProducts )
 
-    
-    console.log('aa')
-
-    let products = await productsRepo.getAll()
-
-  
-
-    res.send(products)
-
-
-    
-    
-})
-
-router.get('/admin/products/:id', async  (req, res) => {
+router.get('/admin/products/:id', requireJwtAuth,async  (req, res) => {
     
     const product = await productsRepo.getOne(req.params.id)
     res.send(product)
@@ -75,8 +65,27 @@ router.post('/admin/products/:id/edit', upload.single('imagen'),[requireName, re
     console.log(changes,id)
 
     if (req.file) {
+
+        const nameSplit = req.file.originalname.split('.')
+        const fileExtension = nameSplit[nameSplit.length -1]
+
+        const validExtensions = ['png', 'jpg' , 'jpeg', 'gif']
+
+        if (!validExtensions.includes(fileExtension)) {
+            return res.status(400).json({
+                ok:false,
+                msg:'No es una extension válida'
+            })
+        }
+
+
+        const fileName = `${uuidv4()}.${fileExtension}`
+
+        //Path para guardar la imagen
+
         const image=req.file.buffer.toString('base64')
         changes.image=image
+        console.log(req.file)
     }
    
    
@@ -97,19 +106,8 @@ router.post('/admin/products/:id/edit', upload.single('imagen'),[requireName, re
  })
 
 
-router.get('/admin/products/new',requireAuth ,(req, res) => {
-    return res.sendFile(path.join(__dirname + '../../../html/product.html'))
-})
 
-// el middleware upload.single('imagen') tambien parseara los otros fields del form
-router.post('/admin/products/new',requireAuth , upload.single('imagen'),[requireName, requirePrice], handleErrors(),async (req, res) => {
-   
-    const image=req.file.buffer.toString('base64')
-    const {title,price}=req.body;
-   
-    await productsRepo.create({title,price,image})
-    //res.redirect('/admin/products')
-    return res.send([])
-})
+// el middleware upload.single('imagen') tambien parseara los otros fields del form , upload.single('imagen')
+router.post('/admin/products/new' ,[requireName, requirePrice],requireJwtAuth , handleErrors(),createProduct)
 
 module.exports = router

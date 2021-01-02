@@ -1,21 +1,12 @@
 const express= require('express')
 const router = express.Router()
-const productsRepo = require('../repositories/products')
+const {getAllProducts,searchProduct} = require('../controllers/products')
 
 
-router.get('/', async (req,res)=> {
+router.get('/', getAllProducts)
 
-    let products = await productsRepo.getAll()
-
-    // products = products.map((res)=> {
-
-    //     res.image= 'data:image/png;base64, '+ res.image ;
-    //     return res
-    // })
-
-    res.send(products)
+router.get('/product/:term', searchProduct)
 
 
-})
 
 module.exports = router;

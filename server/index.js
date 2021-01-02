@@ -1,32 +1,31 @@
-
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
-const birds = require('./prueba');
-const authRouter = require('./routes/admin/auth');
-const adminProductsRouter = require('./routes/admin/products')
-const productsRouter = require('./routes/products')
+const cors = require('cors')
 
 //añade a req la propiedad session , req.session
 const cookieSession = require('cookie-session');
 
+//routes
+const authRouter = require('./routes/admin/auth');
+const adminProductsRouter = require('./routes/admin/products')
+const productsRouter = require('./routes/products')
 
 
-
-
-
-//const usersRepo = new UsersRepository()
-const { json } = require('express');
-
+//DB
+const {dbConnection} = require('./database/config')
 
 const app = express();
 
+dbConnection()
+app.use(cors())
+app.options('*', cors())
 
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+//   });
 
 //para poder parsear los datos json pasados desde angular
 app.use(bodyParser.json())
@@ -44,7 +43,7 @@ app.use(adminProductsRouter)
 app.use(productsRouter)
 
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
 
     console.log('listening')
 })

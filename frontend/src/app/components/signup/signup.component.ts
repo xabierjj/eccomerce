@@ -28,6 +28,8 @@ export class SignupComponent implements OnInit {
       if (res.errors) {
         console.log(res.errors)
       } else {
+
+       
         this.router.navigateByUrl('admin/products')
       }
     })

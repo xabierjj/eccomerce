@@ -1,33 +1,30 @@
-
+require('dotenv').config()
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
-
+const userRepo = require('../../repositories/user')
 
 const SECRET_KEY = 'jjewfijqdpnqpowjwq';
 
-
-const { handleErrors } = require('./middlewares')
-
+//repositories
 const usersRepo = require('../../repositories/users')
-const path = require('path');
+const {login, signup,update} = require('../../controllers/users')
+
+
+const { handleErrors,requireJwtAuth } = require('./middlewares')
+
+
 const router = express.Router()
-const signupTemplate = require('../../views/admin/auth/signup')
-const loginTemplate = require('../../views/admin/auth/login')
-const { requireEmail, requirePassword, requirePaswordConfirmation, requirePaswordLogin, requireEmailExist } = require('./validators')
-
-router.get('/signup', (req, res) => {
+const { requireEmail, requirePassword, requirePaswordConfirmation, requirePaswordLogin, requireEmailExist, requireUserName,requireEmailUpdate,requireNameUpdate} = require('./validators')
 
 
-    //cargar el html de html/signin.html
-    return res.sendFile(path.join(__dirname + '../../../html/signin.html'))
+router.get('/users', async (req,res)=> {
 
-    //llama a la funcion  de ../../views/admin/auth/signup.js
-
-    //return res.send(signupTemplate({ req }))
-
-
-
+    const offset = Number(req.query.offset) || 0
+    console.log(offset)
+    const result= await userRepo.findPagination({}, {offset})
+    console.log(result)
+    res.json(result)
 })
 
 
@@ -35,59 +32,72 @@ router.post('/signup',
     [
         requireEmail,
         requirePassword,
-        requirePaswordConfirmation], handleErrors(), async (req, res) => {
+        requireUserName,
+        requirePaswordConfirmation], handleErrors(),signup)
+
+// router.get('/signout', (req, res) => {
+//     req.session = null;
+//     res.send('Log Out')
+// })
 
 
-            
 
-            const { email, password } = req.body
-
-            const user = await usersRepo.create({ email: email, password: password })
-            const expiresIn = 24 * 60 * 60;
-            const accessToken = jwt.sign({ id: user.id },
-                SECRET_KEY, {
-                expiresIn: expiresIn
-            });
-
-            req.session.userId = user.id;
-
-            res.send({ accessToken: accessToken ,expiresIn:expiresIn})
+router.post('/login', [requireEmailExist, requirePaswordLogin], handleErrors(), login)
 
 
-        })
-
-router.get('/signout', (req, res) => {
-    req.session = null;
-    res.send('Log Out')
-})
-
-router.get('/login', (req, res) => {
+router.put('/user',[requireEmailUpdate,requireNameUpdate], handleErrors() , requireJwtAuth ,update)
 
 
-    return res.sendFile(path.join(__dirname + '../../../html/login.html'))
-
-    //return res.send(loginTemplate({}));
-
-})
-
-router.post('/login', [requireEmailExist, requirePaswordLogin], handleErrors(), async (req, res) => {
-
-
-    const { email } = req.body;
-    console.log(req.body)
-
-    const user = await usersRepo.getOneBy({ email });
-
-    const expiresIn = 24 * 60 * 60;
-    const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: expiresIn });
-
-    req.session.userId = user.id;
-
-    console.log(req.session.userId)
-
-    return res.send({ accessToken: accessToken ,expiresIn:expiresIn  });
-
-
-})
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+// async (req, res) => {
+
+
+//     const { email } = req.body;
+//     console.log(req.body)
+
+//     const user = await usersRepo.getOneBy({ email });
+
+//     const expiresIn = 24 * 60 * 60;
+//     const accessToken = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: expiresIn });
+
+//     req.session.userId = user.id;
+
+//     console.log(accessToken)
+
+//     //return res.send({ accessToken: accessToken ,expiresIn:expiresIn  });
+
+//     return res.json({
+//         accessToken
+//     });
+
+
+// }
+
+
+
+// const { email, password } = req.body
+
+//             const user = await usersRepo.create({ email: email, password: password })
+//             const expiresIn = 24 * 60 * 60;
+//             const accessToken = jwt.sign({ id: user.id },
+//                 process.env.SECRET_KEY, {
+//                 expiresIn: expiresIn
+//             });
+
+//             req.session.userId = user.id;
+
+//             //res.send({ accessToken: accessToken ,expiresIn:expiresIn})
+
+//             return res.json({
+//                 accessToken
+//             });
